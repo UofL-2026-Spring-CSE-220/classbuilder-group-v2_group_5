@@ -23,7 +23,12 @@ public class DateValidator {
             case 10: // October
             case 12: // December
                 return 31;
-            //alot missing here
+            case 6:
+            case 9:
+            case 11:
+                return 30;
+            case 2:
+                return isLeapYear(year)?29:28;
             default:
                 throw new IllegalArgumentException("Invalid month number: " + month);
         }

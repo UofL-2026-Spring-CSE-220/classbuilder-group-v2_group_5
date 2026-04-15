@@ -19,11 +19,42 @@ public record DateRecord(
         return toString(DateFormatOptionsEnum.MM_DD_YYYY);
     }
 
+
     public String toString(DateFormatOptionsEnum format) {
         return switch (format) {
             case DD_MM_YYYY -> String.format("%02d/%02d/%04d", dayInteger, monthInteger, yearInteger);
-            // alot is missing here
+            case MM_DD_YYYY -> String.format("%02d/%02d/%04d", monthInteger,dayInteger,yearInteger);
+            case YYYY_MM_DD -> String.format("%04d/%02d/%02d", yearInteger,monthInteger,dayInteger);
+            case MONTH_DD_YYYY -> String.format("%s %02d, %04d",MonthsEnum.fromMonthNumber(monthInteger).toString(),dayInteger,yearInteger);
         };
+    }
+
+    public static class Builder{
+        private int day;
+        private int month;
+        private int year;
+
+        public Builder setDay(int day) {
+            this.day = day;
+            return this;
+        }
+        public Builder setMonth(int month){
+            this.month=month;
+            return this;
+        }
+
+        public Builder setMonth(MonthsEnum month){
+            this.month=month.getMonthNumber();
+            return this;
+        }
+
+        public Builder setYear(int year) {
+            this.year = year;
+            return this;
+        }
+        public DateRecord build(){
+            return new DateRecord(day,month,year);
+        }
     }
 
     public static void main(String[] args) {
